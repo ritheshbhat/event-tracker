@@ -9,30 +9,36 @@ import java.util.Objects;
 @Table(name = "users")
 public class User {
 //    private @Id @GeneratedValue long id;
-    private @NotBlank String username;
+    private @NotBlank String email;
     private @NotBlank String password;
     private @NotBlank boolean loggedIn;
 
 
     public User() {
     }
-    public User(@NotBlank String username,
+    public User(@NotBlank String email,
                 @NotBlank String password) {
-        this.username = username;
+        this.email = email;
         this.password = password;
         this.loggedIn = false;
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column
-    private String firstName;
+    private String phoneNumber;
+
     @Column
-    private String lastName;
+    private String address;
+
     @Column
-    private int age;
+    private String zipcode;
+
     @Column
-    private String occupation;
+    private String utaId;
+
+
 
     public long getId() {
         return id;
@@ -43,43 +49,44 @@ public class User {
     }
 
 
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
+    public String getEmail() {
+        return email;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public String getLastName() {
-        return lastName;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getAddress() {
+        return address;
     }
 
-    public int getAge() {
-        return age;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public String getZipcode() {
+        return zipcode;
     }
 
-    public String getOccupation() {
-        return occupation;
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
+    public String getUtaId() {
+        return utaId;
+    }
+
+    public void setUtaId(String utaId) {
+        this.utaId = utaId;
     }
 
     public String getPassword() {
@@ -99,22 +106,26 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return Objects.equals(username, user.username) &&
+        return Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password);
     }
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password,
+        return Objects.hash(id, email, password,
                 loggedIn);
     }
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", loggedIn=" + loggedIn +
                 '}';
     }
+
+
+
+
 }
 
