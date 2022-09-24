@@ -4,6 +4,7 @@ import com.sample.rest.Models.Status;
 import com.sample.rest.Models.User;
 import com.sample.rest.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -58,6 +59,7 @@ public class ApiControllers {
     }
 
     @PostMapping("/users/register")
+    @ResponseStatus(HttpStatus.CREATED)
     public Status registerUser(@Valid @RequestBody User newUser){
         List<User> users = userRepo.findAll();
 //        System.out.println("New user: " + newUser.toString());
@@ -71,7 +73,7 @@ public class ApiControllers {
         userRepo.save(newUser);
         return Status.SUCCESS;
     }
-    @PostMapping("/users/login")
+    @PutMapping("/users/login")
     public Status loginUser(@Valid @RequestBody User user) {
         List<User> users = userRepo.findAll();
         for (User other : users) {
@@ -83,7 +85,7 @@ public class ApiControllers {
         }
         return Status.FAILURE;
     }
-    @PostMapping("/users/logout")
+    @PutMapping("/users/logout")
     public Status logUserOut(@Valid @RequestBody User user) {
         List<User> users = userRepo.findAll();
         for (User other : users) {
