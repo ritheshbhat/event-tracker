@@ -1,13 +1,15 @@
 package com.sample.rest.Service.Impl;
 
 import com.sample.rest.Exception.ResourceNotFoundException;
+import com.sample.rest.Models.Department;
 import com.sample.rest.Models.Event;
+import com.sample.rest.Payload.DepartmentDto;
+import com.sample.rest.Repo.DepartmentRepo;
 import com.sample.rest.Repo.EventRepo;
 import com.sample.rest.Service.EventService;
-import com.sample.rest.payload.EventDto;
+import com.sample.rest.Payload.EventDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,22 +18,28 @@ public class EventServiceImpl implements EventService {
 
     private EventRepo eventRepo;
 
+    private DepartmentRepo departmentRepo;
+
+
+
+    public EventServiceImpl(EventRepo eventRepo, DepartmentRepo departmentRepo) {
+        this.eventRepo = eventRepo;
+        this.departmentRepo= departmentRepo;
+    }
     @Autowired
     public EventServiceImpl(EventRepo eventRepo) {
         this.eventRepo = eventRepo;
     }
 
+
     @Override
     public EventDto createEvent(EventDto eventDto) {
 
         Event event=mapToEntity(eventDto);
-
         Event newEvent=eventRepo.save(event);
-
-        EventDto eventResponse=mapToDto(newEvent);
-
-        return eventResponse;
+        return mapToDto(newEvent);
     }
+
 
     @Override
     public List<EventDto> getAllEvents() {
@@ -57,6 +65,7 @@ public class EventServiceImpl implements EventService {
         event.setVenue(eventDto.getVenue());
         event.setEventDate(eventDto.getEventDate());
         event.setEventTime(eventDto.getEventTime());
+        event.setDepartment(eventDto.getDepartment());
 
         Event updatedPost=eventRepo.save(event);
 
@@ -81,6 +90,7 @@ public class EventServiceImpl implements EventService {
         eventDto.setVenue(event.getVenue());
         eventDto.setEventDate(event.getEventDate());
         eventDto.setEventTime(event.getEventTime());
+        eventDto.setDepartment(event.getDepartment());
     return eventDto;
     }
 
@@ -92,6 +102,7 @@ public class EventServiceImpl implements EventService {
         event.setVenue(eventDto.getVenue());
         event.setEventDate(eventDto.getEventDate());
         event.setEventTime(eventDto.getEventTime());
+        event.setDepartment(eventDto.getDepartment());
         return event;
     }
 }

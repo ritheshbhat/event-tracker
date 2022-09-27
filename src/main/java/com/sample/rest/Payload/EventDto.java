@@ -1,5 +1,6 @@
-package com.sample.rest.payload;
+package com.sample.rest.Payload;
 
+import com.sample.rest.Models.Department;
 import lombok.Data;
 
 import java.sql.Time;
@@ -17,5 +18,8 @@ public class EventDto {
     private String venue;
 
     private Time eventTime;
+    private Department department;
+
+
 }
 

@@ -1,5 +1,6 @@
 package com.sample.rest.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -35,4 +38,11 @@ public class Event {
     private String venue;
     @Column(nullable = false)
     private Time eventTime;
+
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_id",nullable = false)
+    private Department department;
+
 }

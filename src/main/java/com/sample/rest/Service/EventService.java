@@ -1,12 +1,12 @@
 package com.sample.rest.Service;
 
-import com.sample.rest.payload.EventDto;
+import com.sample.rest.Payload.EventDto;
 
 import java.util.List;
 
 public interface EventService {
 
-    EventDto createEvent(EventDto eventDto);
+    EventDto createEvent(EventDto eventDto );
 
     List<EventDto> getAllEvents();
 
