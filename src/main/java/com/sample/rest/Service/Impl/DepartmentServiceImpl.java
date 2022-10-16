@@ -67,8 +67,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department department=DepartmentRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Department","name",id));
         DepartmentRepo.delete(department);
     }
-//
-//
     private DepartmentDto mapToDto(Department department){
         DepartmentDto DepartmentDto=new DepartmentDto();
         DepartmentDto.setId(department.getId());
