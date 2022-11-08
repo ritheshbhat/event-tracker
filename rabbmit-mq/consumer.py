@@ -1,6 +1,8 @@
 import pika
 
-def send_message():
+
+
+def consume():
     credentials = pika.PlainCredentials(username='guest', password='guest')
 
     connection = pika.BlockingConnection(
@@ -9,10 +11,13 @@ def send_message():
 
     channel.queue_declare(queue='hello')
 
-    channel.basic_publish(exchange='', routing_key='hello', body='sending second request.')
-    print(" [x] Sent 'Hello World!'")
-    connection.close()
+    def callback(ch, method, properties, body):
+        print(" [x] Received %r" % body)
 
-if __name__ == '__main__':
-    send_message()
+    channel.basic_consume(queue='hello', on_message_callback=callback, auto_ack=True)
 
+    print(' [*] Waiting for messages. To exit press CTRL+C')
+    channel.start_consuming()
+
+
+consume()
