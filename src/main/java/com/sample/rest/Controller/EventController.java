@@ -4,7 +4,6 @@ import com.sample.rest.Service.EventService;
 import com.sample.rest.Payload.EventDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,7 +20,6 @@ public class EventController {
 
    // Creating an event
     @PostMapping("events")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<EventDto> createEvent(@Valid @RequestBody EventDto eventDto){
         return new ResponseEntity<>(eventService.createEvent(eventDto), HttpStatus.CREATED);
     }
@@ -37,7 +35,6 @@ public class EventController {
     }
 
     @PutMapping("events/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<EventDto> updateEvent(@Valid @RequestBody EventDto eventDto,@PathVariable(name = "id") long id){
 
         EventDto eventResponse=eventService.updateEventById(eventDto,id);
@@ -45,7 +42,6 @@ public class EventController {
     }
 
     @DeleteMapping("events/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteEventById(@PathVariable(name = "id") long id){
 
         eventService.deleteEventById(id);
