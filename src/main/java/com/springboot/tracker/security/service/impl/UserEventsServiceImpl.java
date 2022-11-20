@@ -25,13 +25,6 @@ public class UserEventsServiceImpl implements UserEventsService {
         return mapToDto(registerEvent);
     }
 
-    @Override
-    public List<UserEventsDto> getAllEventsRegistrationDetails() {
-
-        List<UserEvents> userEvents=userEventRepo.findAll();
-        return userEvents.stream().map(userEvent->mapToDto(userEvent)).collect(Collectors.toList());
-    }
-
 
     private UserEventsDto mapToDto(UserEvents userEvents){
         UserEventsDto userEventsDto=new UserEventsDto();

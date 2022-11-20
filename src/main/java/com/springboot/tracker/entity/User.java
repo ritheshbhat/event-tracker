@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.type.descriptor.sql.VarcharTypeDescriptor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Data
@@ -14,7 +15,7 @@ import java.util.Set;
 
 
 })
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +32,7 @@ public class User {
     private long phNo;
 
 
-    private VarcharTypeDescriptor barcode;
+    private byte[] barcode;
 
 
 

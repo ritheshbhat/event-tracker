@@ -8,6 +8,7 @@ import com.springboot.tracker.security.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,6 +72,13 @@ public class EventServiceImpl implements EventService {
 
         return mapToDto(updatedPost);
     }
+
+    @Override
+    public List<EventDto> getEventsByDate() {
+        return null;
+    }
+
+
 
     @Override
     public void deleteEventById(long id) {

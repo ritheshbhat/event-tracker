@@ -2,6 +2,7 @@ package com.springboot.tracker.controller;
 
 import com.springboot.tracker.entity.Role;
 import com.springboot.tracker.entity.User;
+import com.springboot.tracker.helpers.ZXingHelper;
 import com.springboot.tracker.payload.LoginDto;
 import com.springboot.tracker.payload.SignUpDto;
 import com.springboot.tracker.repository.RoleRepository;
@@ -43,6 +44,7 @@ public class AuthController {
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         return new ResponseEntity<>("User logged-in successfully!.", HttpStatus.OK);
     }
 
@@ -67,8 +69,11 @@ public class AuthController {
         user.setPhNo(signUpDto.getPhNo());
         user.setZipcode(signUpDto.getZipcode());
         user.setUtaId(signUpDto.getUtaId());
+        Long utaId=user.getUtaId();
+        String utaId1=utaId.toString();
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
-
+        byte[] barcode= ZXingHelper.createBarCodeImage(utaId1,200,100);
+        user.setBarcode(barcode);
         Role roles = roleRepository.findByName("ROLE_ADMIN").get();
         user.setRoles(Collections.singleton(roles));
         userRepository.save(user);

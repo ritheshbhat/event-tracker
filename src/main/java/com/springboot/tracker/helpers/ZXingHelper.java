@@ -23,7 +23,9 @@ public class ZXingHelper {
             System.out.println("bitMatrix.toString()"+bitMatrix.hashCode());
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//            System.out.println("Hi"+byteArrayOutputStream);
             MatrixToImageWriter.writeToStream(bitMatrix, "png", byteArrayOutputStream);
+            System.out.println("hi"+byteArrayOutputStream.toByteArray());
             return byteArrayOutputStream.toByteArray();
         } catch (Exception e) {
             return null;

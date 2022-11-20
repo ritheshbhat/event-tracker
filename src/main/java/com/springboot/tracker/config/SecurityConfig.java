@@ -32,7 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.GET,"/departments/**").permitAll()
+//                .antMatchers(HttpMethod.POST,"/trackerDepartments/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/EventTracker/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/tracker/**").permitAll()
                 .antMatchers("/EventTracker/auth/**").permitAll()
                 .anyRequest()
                 .authenticated()
