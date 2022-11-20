@@ -74,7 +74,8 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
         byte[] barcode= ZXingHelper.createBarCodeImage(utaId1,200,100);
         user.setBarcode(barcode);
-        Role roles = roleRepository.findByName("ROLE_USER").get();
+
+        Role roles = roleRepository.findByName("ROLE_ADMIN").get();
         user.setRoles(Collections.singleton(roles));
         userRepository.save(user);
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
