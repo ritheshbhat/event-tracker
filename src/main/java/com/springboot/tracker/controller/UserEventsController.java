@@ -25,10 +25,7 @@ public class UserEventsController {
     }
     private UserEventsService userEventService;
 
-//    @GetMapping("registrationDetails")
-//    public List<UserEventsDto> getAllRegistrationDetails(){
-//        return userEventService.getAllEventsRegistrationDetails();
-//    }
+
     @PostMapping("registerEvent")
     public String registerEvent(@RequestBody UserEventsDto userEventsDto) throws JsonProcessingException {
         ResponseEntity event= new ResponseEntity<>(userEventService.registerEvent(userEventsDto), HttpStatus.CREATED);

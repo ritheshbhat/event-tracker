@@ -12,5 +12,6 @@ public class UserEventsDto {
     private Timestamp created_On;
     private Event uEvent;
     private User user;
+    private boolean delivered ;
 }
 

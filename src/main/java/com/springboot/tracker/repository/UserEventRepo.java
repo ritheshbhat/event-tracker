@@ -19,9 +19,11 @@ public interface UserEventRepo extends JpaRepository<UserEvents,Long> {
     @Query("DELETE from UserEvents WHERE user.id=:user_id and uEvent.event_id=:event_id")
     void cancelEventRegistration(long user_id,long event_id);
 
-    @Query(value = "SELECT e.user.id FROM UserEvents e WHERE e.uEvent.event_id<=:event_id")
-    List<Long> getUsers(long event_id);
-
-
+    @Query("SELECT e.user.id FROM UserEvents e WHERE e.uEvent.event_id<=:event_id and e.delivered=:delivered")
+    List<Long> getUsers(long event_id, boolean delivered);
+    @Transactional
+    @Modifying
+    @Query("update UserEvents e set e.delivered =:delivered WHERE e.user.id=:userId and e.uEvent.event_id=:event_id")
+    void updateUserEvent(boolean delivered, long userId, long event_id);
 }
 

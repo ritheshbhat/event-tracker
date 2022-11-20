@@ -38,4 +38,5 @@ public class UserEvents {
     private Event uEvent;
 
 
+    boolean delivered;
 }

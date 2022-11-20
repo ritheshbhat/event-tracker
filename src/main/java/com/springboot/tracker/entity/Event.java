@@ -39,7 +39,7 @@ public class Event {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "department_id",nullable = false)
+    @JoinColumn(name = "id",nullable = false)
     private Department department;
 
     @JsonIgnore

@@ -74,36 +74,36 @@ public class EventController {
 //        outputStream.flush();
 //        outputStream.close();
 //    }
-    @RequestMapping(value = "barcode/{id}", method = RequestMethod.GET)
-    public void barcode(@PathVariable("id") int id, HttpServletResponse response) throws Exception {
-        response.setContentType("image/png");
-        OutputStream outputStream = response.getOutputStream();
-        User user =userRepository.findById(id);
-
-        var userJson = new JSONObject(user);
-
-        System.out.println(userJson);
-        System.out.println(userJson.get("barcode"));
-//        byte[] barcode1=byte[]()
-        System.out.println(userJson.get("barcode").getClass());
-//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//        ObjectOutputStream oos = new ObjectOutputStream(bos);
-//        oos.writeObject(userJson.get("barcode"));
-        //oos.flush();
-        JSONArray jsonArray=new JSONArray(userJson.get("barcode").toString());
-        byte[] bytes = new byte[jsonArray.length()];
-        for (int i = 0; i < jsonArray.length(); i++) {
-            bytes[i]=(byte)(((int)jsonArray.get(i)) & 0xFF);
-        }
-        System.out.println(bytes);
-        outputStream.write(bytes);
-//        outputStream.write(ZXingHelper.createBarCodeImage(id, 200, 100));
-//        outputStream.write(id.getBytes());
-        outputStream.flush();
-        outputStream.close();
-        //outputStream.write(userRepository.g);
-
-    }
+//    @RequestMapping(value = "barcode/{id}", method = RequestMethod.GET)
+//    public void barcode(@PathVariable("id") int id, HttpServletResponse response) throws Exception {
+//        response.setContentType("image/png");
+//        OutputStream outputStream = response.getOutputStream();
+//        User user =userRepository.findById(id);
+//
+//        var userJson = new JSONObject(user);
+//
+//        System.out.println(userJson);
+//        System.out.println(userJson.get("barcode"));
+////        byte[] barcode1=byte[]()
+//        System.out.println(userJson.get("barcode").getClass());
+////        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+////        ObjectOutputStream oos = new ObjectOutputStream(bos);
+////        oos.writeObject(userJson.get("barcode"));
+//        //oos.flush();
+//        JSONArray jsonArray=new JSONArray(userJson.get("barcode").toString());
+//        byte[] bytes = new byte[jsonArray.length()];
+//        for (int i = 0; i < jsonArray.length(); i++) {
+//            bytes[i]=(byte)(((int)jsonArray.get(i)) & 0xFF);
+//        }
+//        System.out.println(bytes);
+//        outputStream.write(bytes);
+////        outputStream.write(ZXingHelper.createBarCodeImage(id, 200, 100));
+////        outputStream.write(id.getBytes());
+//        outputStream.flush();
+//        outputStream.close();
+//        //outputStream.write(userRepository.g);
+//
+//    }
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("users/{id}")
     public User getUserById(@PathVariable(name = "id") long id){
