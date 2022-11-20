@@ -45,14 +45,14 @@ import java.util.concurrent.TimeoutException;
         factory.setPassword("guest");
         factory.setVirtualHost("/");
         Connection connection = factory.newConnection();
-        System.out.println("routing key is"+routingKey);
+//        System.out.println("routing key is"+routingKey);
         Channel channel = connection.createChannel();
         if (routingKey == null){
             System.out.println("sending emergency notifcation");
             channel.exchangeDeclare("public", BuiltinExchangeType.FANOUT);
             channel.basicPublish("public","",null, data.getBytes(StandardCharsets.UTF_8));
         } else {
-            System.out.println("sending user specific notif");
+//            System.out.println("sending user specific notif");
             channel.exchangeDeclare("user",BuiltinExchangeType.DIRECT);
             channel.basicPublish("user",userId,null,data.getBytes(StandardCharsets.UTF_8));
         }

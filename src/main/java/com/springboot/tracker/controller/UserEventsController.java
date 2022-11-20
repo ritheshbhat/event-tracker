@@ -50,6 +50,29 @@ public class UserEventsController {
         userEventRepo.cancelEventRegistration(userId,eventId);
         return "Registration cancelled successfully";
     }
+    @PostMapping("checkRegistrationDetails")
+    public boolean checkRegistrationDetails(@RequestBody UserEventsDto userEventsDto){
+        var userEventJson=new JSONObject(userEventsDto);
+//        System.out.println(userEventJson);
+        var userJson= new JSONObject(userEventJson.get("user").toString());
+        String userId1=userJson.get("id").toString();
+//        System.out.println(userJson.get("id"));
+        var eventJson= new JSONObject(userEventJson.get("UEvent").toString());
+        String eventId1=eventJson.get("event_id").toString();
+        long userId= Long.parseLong(userId1);
+        long eventId=Long.parseLong(eventId1);
+        Long res =userEventRepo.checkRegistrationDetails(userId,eventId);
+//        System.out.println(res);
+        if(res==null){
+            //System.out.println(false);
+            return false;
+        }
+        else {
+            return true;
+        }
+
+//        return res;
+    }
 
 }
 
