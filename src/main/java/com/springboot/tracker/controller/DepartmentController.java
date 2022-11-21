@@ -1,5 +1,6 @@
 package com.springboot.tracker.controller;
 
+import com.springboot.tracker.entity.Department;
 import com.springboot.tracker.payload.DepartmentDto;
 import com.springboot.tracker.repository.DepartmentRepo;
 import com.springboot.tracker.security.service.DepartmentService;
@@ -50,7 +51,10 @@ public class DepartmentController {
 
         return departmentService.getAllDepartments();
     }
-
+    @GetMapping("/users")
+    public List<Department> getAllDepartmentsForUsers(){
+        return departmentRepo.getAllDepartmentsForUsers();
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable(name = "id") long id){

@@ -1,6 +1,7 @@
 package com.springboot.tracker.repository;
 
 
+import com.springboot.tracker.entity.Event;
 import com.springboot.tracker.entity.UserEvents;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -31,6 +32,10 @@ public interface UserEventRepo extends JpaRepository<UserEvents,Long> {
     List<Long> getUserForEvent(long event_id);
     @Query("SELECT e.id from UserEvents e where e.user.id=:user_id and e.uEvent.event_id=:event_id")
     Long checkRegistrationDetails(long user_id, long event_id);
+
+    @Query("SELECT e.uEvent from UserEvents e where e.user.id=:user_id")
+    List<Event> getAllEventsForUsers(long user_id);
+
 
 
 

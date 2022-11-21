@@ -1,10 +1,13 @@
 package com.springboot.tracker.controller;
 
+import com.springboot.tracker.entity.Event;
 import com.springboot.tracker.entity.User;
 import com.springboot.tracker.helpers.ZXingHelper;
 import com.springboot.tracker.payload.EventDto;
+import com.springboot.tracker.payload.deptUpdate;
 import com.springboot.tracker.repository.DepartmentRepo;
 import com.springboot.tracker.repository.EventRepo;
+import com.springboot.tracker.repository.UserDepartmentRepo;
 import com.springboot.tracker.repository.UserRepository;
 import com.springboot.tracker.security.service.EventService;
 import lombok.var;
@@ -36,6 +39,8 @@ public class EventController {
     }
     @Autowired
     private EventRepo eventRepo;
+    @Autowired
+    private UserDepartmentRepo userDepartmentRepo;
     @Autowired
     private UserRepository userRepository;
     private EventService eventService;
@@ -81,6 +86,16 @@ public class EventController {
     public ResponseEntity<EventDto> getEventByID(@PathVariable(name = "id") long id){
         return ResponseEntity.ok(eventService.getEventById(id));
     }
+
+
+    @GetMapping("events/usersPreference/{username}")
+    public List<Event> getEventsForUserPreference(@PathVariable(name = "username") String username){
+//        List<Long> dept_List=dept_ids.getDepartments();
+        User user = userRepository.getUserFromUsername(username);
+        List<Long> depts = userDepartmentRepo.getUserDepartmentsIdByUserId(user.getId());
+        return  eventRepo.getAllEventsForUsersAccordingToPreference(depts);
+
+    }
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("events/{id}")
     public ResponseEntity<EventDto> updateEvent( @RequestBody EventDto eventDto,@PathVariable(name = "id") long id) throws IOException, TimeoutException {
@@ -95,45 +110,6 @@ public class EventController {
         eventService.deleteEventById(id);
         return new ResponseEntity<>("Event deleted successfully",HttpStatus.OK);
     }
-//    @RequestMapping(value = "barcode/{id}", method = RequestMethod.GET)
-//    public void barcode(@PathVariable("id") String id, HttpServletResponse response) throws Exception {
-//        response.setContentType("image/png");
-//        OutputStream outputStream = response.getOutputStream();
-//        outputStream.write(ZXingHelper.createBarCodeImage(id, 200, 100));
-//        outputStream.write(id.getBytes());
-//        outputStream.flush();
-//        outputStream.close();
-//    }
-//    @RequestMapping(value = "barcode/{id}", method = RequestMethod.GET)
-//    public void barcode(@PathVariable("id") int id, HttpServletResponse response) throws Exception {
-//        response.setContentType("image/png");
-//        OutputStream outputStream = response.getOutputStream();
-//        User user =userRepository.findById(id);
-//
-//        var userJson = new JSONObject(user);
-//
-//        System.out.println(userJson);
-//        System.out.println(userJson.get("barcode"));
-////        byte[] barcode1=byte[]()
-//        System.out.println(userJson.get("barcode").getClass());
-////        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-////        ObjectOutputStream oos = new ObjectOutputStream(bos);
-////        oos.writeObject(userJson.get("barcode"));
-//        //oos.flush();
-//        JSONArray jsonArray=new JSONArray(userJson.get("barcode").toString());
-//        byte[] bytes = new byte[jsonArray.length()];
-//        for (int i = 0; i < jsonArray.length(); i++) {
-//            bytes[i]=(byte)(((int)jsonArray.get(i)) & 0xFF);
-//        }
-//        System.out.println(bytes);
-//        outputStream.write(bytes);
-////        outputStream.write(ZXingHelper.createBarCodeImage(id, 200, 100));
-////        outputStream.write(id.getBytes());
-//        outputStream.flush();
-//        outputStream.close();
-//        //outputStream.write(userRepository.g);
-//
-//    }
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("users/{id}")
     public User getUserById(@PathVariable(name = "id") long id){
@@ -145,9 +121,5 @@ public class EventController {
         System.out.println(userJson.get("barcode"));
         return user;
     }
-//    @PostMapping("events")
-//    public ResponseEntity<EventDto> createEvent(@Valid @RequestBody EventDto eventDto){
-//        return new ResponseEntity<>(eventService.createEvent(eventDto), HttpStatus.CREATED);
-//    }
 
 }

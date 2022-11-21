@@ -33,4 +33,7 @@ public interface EventRepo extends JpaRepository<Event,Long> {
     @Query("SELECT e.title from Event e where e.title=:title")
     String existsByEventTitle(String title);
 
+    @Query("SELECT e,e.department.name from Event e where e.department.id in (:dept_id)")
+    List<Event> getAllEventsForUsersAccordingToPreference(List dept_id);
+
 }

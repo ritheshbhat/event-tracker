@@ -1,6 +1,7 @@
 package com.springboot.tracker.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.springboot.tracker.entity.Event;
 import com.springboot.tracker.payload.UserEventsDto;
 import com.springboot.tracker.repository.EventRepo;
 import com.springboot.tracker.repository.UserEventRepo;
@@ -87,6 +88,12 @@ private EventRepo eventRepo;
         else {
             return true;
         }
+    }
+
+    @GetMapping("userEvents/{id}")
+    public List<Event> getRegisteredEventsForAUser(@PathVariable(name = "id") long id) {
+    List<Event> events= userEventRepo.getAllEventsForUsers(id);
+    return events;
     }
 
 }
