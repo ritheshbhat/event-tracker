@@ -1,12 +1,14 @@
-
 package com.springboot.tracker.entity;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,17 +16,15 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(
-        name = "user_events"
+        name = "user_departments"
 )
-public class UserEvents {
+public class UserDepartments {
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
     )
     private Long id ;
 
-    @CreationTimestamp
-    private Timestamp created_On;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
@@ -33,9 +33,8 @@ public class UserEvents {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "event_id")
-    private Event uEvent;
+    @JoinColumn(name = "department_id")
+    private Department department;
 
 
-    boolean delivered;
 }

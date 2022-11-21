@@ -8,7 +8,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 @RestController
 @RequestMapping("/departments/")
@@ -26,10 +28,13 @@ public class DepartmentController {
         return new ResponseEntity<>(departmentService.createDepartment(departmentDto), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<DepartmentDto> getAllDepartments(){
+
         return departmentService.getAllDepartments();
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable(name = "id") long id){
@@ -46,7 +51,7 @@ public class DepartmentController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> deleteDepartmentById(@PathVariable(name = "id") long id){
+    public ResponseEntity<String> deleteDepartmentById(@PathVariable(name = "id") long id) throws IOException, TimeoutException {
 
         departmentService.deleteDepartmentById(id);
         return new ResponseEntity<>("Department deleted successfully",HttpStatus.OK);

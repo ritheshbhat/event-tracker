@@ -28,8 +28,9 @@ public class Department {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "department",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "department",cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Set<Event> events=new HashSet<>();
+
 
 
 

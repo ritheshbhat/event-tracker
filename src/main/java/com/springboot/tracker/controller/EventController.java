@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeoutException;
 
 
 @RestController
@@ -38,13 +40,18 @@ public class EventController {
     // Creating an event
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("events")
-    public ResponseEntity<EventDto> createEvent(@RequestBody EventDto eventDto){
+    public ResponseEntity<EventDto> createEvent(@RequestBody EventDto eventDto) throws IOException, TimeoutException {
         return new ResponseEntity<>(eventService.createEvent(eventDto), HttpStatus.CREATED);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("events")
     public List<EventDto> getAllEvents(){
         return eventService.getAllEvents();
+    }
+
+    @GetMapping("events/users")
+    public List<EventDto> getAllEventsForUsers(){
+        return eventService.getAllEventsForUsers();
     }
 
     @GetMapping("events/{id}")
@@ -53,14 +60,14 @@ public class EventController {
     }
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("events/{id}")
-    public ResponseEntity<EventDto> updateEvent( @RequestBody EventDto eventDto,@PathVariable(name = "id") long id){
+    public ResponseEntity<EventDto> updateEvent( @RequestBody EventDto eventDto,@PathVariable(name = "id") long id) throws IOException, TimeoutException {
 
         EventDto eventResponse=eventService.updateEventById(eventDto,id);
         return new ResponseEntity<>(eventResponse,HttpStatus.CREATED);
     }
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("events/{id}")
-    public ResponseEntity<String> deleteEventById(@PathVariable(name = "id") long id){
+    public ResponseEntity<String> deleteEventById(@PathVariable(name = "id") long id) throws IOException, TimeoutException {
 
         eventService.deleteEventById(id);
         return new ResponseEntity<>("Event deleted successfully",HttpStatus.OK);

@@ -1,13 +1,19 @@
 package com.springboot.tracker.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.type.descriptor.sql.VarcharTypeDescriptor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username"}),
@@ -30,8 +36,6 @@ public class User implements Serializable {
     private long zipcode;
     private String address;
     private long phNo;
-
-
     private byte[] barcode;
 
 
@@ -42,4 +46,15 @@ public class User implements Serializable {
        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "uEvent",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    private Set<UserEvents> uEvent=new HashSet<>();
+
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "uDepartment",cascade = CascadeType.REMOVE,orphanRemoval = true)
+//    private Set<UserDepartments> uDepartment=new HashSet<>();
+
+
+
 }

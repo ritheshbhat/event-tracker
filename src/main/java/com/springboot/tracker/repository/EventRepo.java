@@ -22,4 +22,10 @@ public interface EventRepo extends JpaRepository<Event,Long> {
     @Query(value = "SELECT e.description FROM Event e WHERE e.eventDate<=:future_time")
     List<String> getDescription(Date future_time);
 
+    @Query("SELECT e from Event e where e.department.id  <> 2")
+    List<Event> getEventsForUsers();
+
+    @Query("SELECT e from Event e where e.department.id =:dept_id")
+    List<Event> getEventByDepartment_Id(long dept_id);
+
 }

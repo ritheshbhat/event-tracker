@@ -52,11 +52,29 @@ import java.util.concurrent.TimeoutException;
             channel.exchangeDeclare("public", BuiltinExchangeType.FANOUT);
             channel.basicPublish("public","",null, data.getBytes(StandardCharsets.UTF_8));
         } else {
+
 //            System.out.println("sending user specific notif");
             channel.exchangeDeclare("user",BuiltinExchangeType.DIRECT);
             channel.basicPublish("user",userId,null,data.getBytes(StandardCharsets.UTF_8));
         }
     }
+
+    public static void sendGenericMessagetoBroker(String deptName, String data, String routingKey) throws IOException, TimeoutException, IOException, TimeoutException {
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost("18.219.9.194");
+        factory.setPort(5672);
+        factory.setUsername("guest");
+        factory.setPassword("guest");
+        factory.setVirtualHost("/");
+        Connection connection = factory.newConnection();
+//        System.out.println("routing key is"+routingKey);
+        Channel channel = connection.createChannel();
+
+//            System.out.println("sending user specific notif");
+            channel.exchangeDeclare(deptName,BuiltinExchangeType.FANOUT);
+            channel.basicPublish(deptName,"",null,data.getBytes(StandardCharsets.UTF_8));
+        }
+
 
 
     public Scheduler(DepartmentRepo departmentRepo, EventRepo eventRepo, DepartmentService departmentService, UserEventRepo UserEventRepo ) {

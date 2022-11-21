@@ -50,7 +50,7 @@ public class UserEventsController {
         userEventRepo.cancelEventRegistration(userId,eventId);
         return "Registration cancelled successfully";
     }
-    @PostMapping("checkRegistrationDetails")
+    @GetMapping("checkRegistrationDetails")
     public boolean checkRegistrationDetails(@RequestBody UserEventsDto userEventsDto){
         var userEventJson=new JSONObject(userEventsDto);
 //        System.out.println(userEventJson);

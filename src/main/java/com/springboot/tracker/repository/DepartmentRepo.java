@@ -10,4 +10,8 @@ public interface DepartmentRepo extends JpaRepository<Department,Long>{
 
     @Query("SELECT d.name FROM Department d WHERE d.id=:id")
     String getDeptName(long id);
+
+    @Query("SELECT d FROM Department d WHERE d.id=:id")
+    Department getDeptById(long id);
+
 }

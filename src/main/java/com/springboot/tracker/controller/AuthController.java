@@ -1,11 +1,16 @@
 package com.springboot.tracker.controller;
 
+import com.springboot.tracker.entity.Department;
 import com.springboot.tracker.entity.Role;
 import com.springboot.tracker.entity.User;
+import com.springboot.tracker.entity.UserDepartments;
 import com.springboot.tracker.helpers.ZXingHelper;
 import com.springboot.tracker.payload.LoginDto;
 import com.springboot.tracker.payload.SignUpDto;
+import com.springboot.tracker.payload.UserDepartmentDto;
+import com.springboot.tracker.repository.DepartmentRepo;
 import com.springboot.tracker.repository.RoleRepository;
+import com.springboot.tracker.repository.UserDepartmentRepo;
 import com.springboot.tracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +20,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/EventTracker/auth")
@@ -33,10 +36,16 @@ public class AuthController {
     private UserRepository userRepository;
 
     @Autowired
+    private DepartmentRepo departmentRepo;
+
+    @Autowired
+    private UserDepartmentRepo userDepartmentRepo;
+    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
 
     @PostMapping("/Login")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto){
@@ -45,6 +54,17 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return new ResponseEntity<>("User logged-in successfully!.", HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{username}")
+    public ResponseEntity<UserDepartmentDto> getUserById(@PathVariable(name = "username") String username) {
+
+        User user = userRepository.getUserFromUsername(username);
+        List<Department> depts = userDepartmentRepo.getUserDepartmentsByUserId(user.getId());
+        UserDepartmentDto uds = new UserDepartmentDto();
+            uds.setUser(user);
+            uds.setDeparments(depts);
+        return new ResponseEntity<>(uds,HttpStatus.OK);
     }
 
     @PostMapping("/SignUp")
@@ -77,6 +97,17 @@ public class AuthController {
         Role roles = roleRepository.findByName("ROLE_USER").get();
         user.setRoles(Collections.singleton(roles));
         userRepository.save(user);
+        List<Long> departments = signUpDto.getDepartments();
+
+        for (int i = 0; i < departments.size(); i++) {
+            UserDepartments userDepartments = new UserDepartments();
+            userDepartments.setUser(user);
+            Department dept = departmentRepo.getDeptById(departments.get(i));
+            userDepartments.setDepartment(dept);
+            userDepartmentRepo.save(userDepartments);
+
+        }
+
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
 

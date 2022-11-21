@@ -3,16 +3,30 @@ package com.springboot.tracker.security.service.impl;
 import com.springboot.tracker.entity.Department;
 import com.springboot.tracker.exception.ResourceNotFoundException;
 import com.springboot.tracker.payload.DepartmentDto;
+import com.springboot.tracker.repository.EventRepo;
+import com.springboot.tracker.repository.UserEventRepo;
 import com.springboot.tracker.security.service.DepartmentService;
+import com.springboot.tracker.security.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.springboot.tracker.repository.DepartmentRepo;
+
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentRepo DepartmentRepo;
+
+    @Autowired
+    private EventService eventService;
+   @Autowired
+    private EventRepo eventRepo;
+
+    @Autowired
+    private UserEventRepo userEventRepo;
 
     @Autowired
     public DepartmentServiceImpl(DepartmentRepo DepartmentRepo) {
@@ -61,9 +75,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public void deleteDepartmentById(long id) {
+    public void deleteDepartmentById(long id) throws IOException, TimeoutException {
 
         Department department=DepartmentRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Department","name",id));
+        eventService.getUserIdsForDeptAndSendNotification(department.getId());
         DepartmentRepo.delete(department);
     }
     //

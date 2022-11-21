@@ -8,7 +8,8 @@ import java.sql.Time;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -43,7 +44,7 @@ public class Event {
     private Department department;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "uEvent",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "uEvent",cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Set<UserEvents> uEvent=new HashSet<>();
 
 
