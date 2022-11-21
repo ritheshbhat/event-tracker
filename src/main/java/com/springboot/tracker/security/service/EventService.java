@@ -12,7 +12,7 @@ public interface EventService {
 
     List<EventDto> getAllEvents();
 
-    List<Long> getUserIdsForDeptAndSendNotification(long dept_id) throws IOException, TimeoutException;
+    void getUserIdsForDeptAndSendNotification(long dept_id) throws IOException, TimeoutException;
 
     EventDto getEventById(long id);
 

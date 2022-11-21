@@ -26,6 +26,9 @@ public class EventServiceImpl implements EventService {
    @Autowired
     private DepartmentRepo departmentRepo;
 
+//    @Autowired
+//    private EventService eventService;
+
    @Autowired
    private UserEventRepo userEventRepo;
 
@@ -64,8 +67,8 @@ public class EventServiceImpl implements EventService {
 
         }
         else{
-            System.out.println("generic notification"+event.getDepartment().getName());
-            Scheduler.sendGenericMessagetoBroker(event.getDepartment().getName(),data.toString(), event.getDepartment().getName().toString());
+            System.out.println("generic notification");
+            Scheduler.sendGenericMessagetoBroker(deptName,data.toString(), deptName);
 
         }
         return mapToDto(newEvent);
@@ -87,26 +90,24 @@ public class EventServiceImpl implements EventService {
 
 
     @Override
-    public List<Long> getUserIdsForDeptAndSendNotification(long dept_id) throws IOException, TimeoutException {
+    public void getUserIdsForDeptAndSendNotification(long dept_id) throws IOException, TimeoutException {
         List<Event> event=eventRepo.getEventByDepartment_Id(dept_id);
-        List<Long> user_ids = null;
+        System.out.println("evebt is"+event);
         for (int i = 0; i < event.size(); i++) {
             List<Long> temp_user = userEventRepo.getUserForEvent(event.get(i).getEvent_id());
+            System.out.println("user for event .."+temp_user+event.get(i));
             for (int j = 0; j < temp_user.size(); j++) {
                 HashMap<String, String> data = new HashMap<String, String>();
-
-                user_ids.add(temp_user.get(j));
                 data.put("title", event.get(i).getTitle());
                 data.put("description", event.get(i).getDescription().toString());
                 data.put("venue", event.get(i).getVenue().toString());
                 data.put("event_id", event.get(i).getEvent_id().toString());
                 data.put("action", "department deleted.");
-                Scheduler.sendMessageToBroker(user_ids.get(j).toString(),data.toString(), user_ids.get(j).toString());
+                Scheduler.sendMessageToBroker(temp_user.get(j).toString(),data.toString(), temp_user.get(j).toString());
             }
 
 
         }
-        return user_ids;
     }
     @Override
     public EventDto getEventById(long id){
@@ -131,7 +132,7 @@ public class EventServiceImpl implements EventService {
         data.put("description", event.getDescription().toString());
         data.put("venue", event.getVenue().toString());
         data.put("event_id", event.getEvent_id().toString());
-        data.put("action", "update");
+        data.put("action", "event updated");
         Event updatedPost=eventRepo.save(event);
         Department dept = departmentRepo.getDeptById(event.getDepartment().getId());
         Scheduler.sendGenericMessagetoBroker(dept.getName(),data.toString(), dept.getName().toString());
@@ -152,16 +153,26 @@ public class EventServiceImpl implements EventService {
     public void deleteEventById(long id) throws IOException, TimeoutException {
 
         Event event=eventRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Event","name",id));
-        eventRepo.delete(event);
-        HashMap<String, String> data = new HashMap<String, String>();
-
-        data.put("title", event.getTitle().toString());
-        data.put("description", event.getDescription().toString());
-        data.put("venue", event.getVenue().toString());
-        data.put("event_id", event.getEvent_id().toString());
-        data.put("action", "delete");
         Department dept = departmentRepo.getDeptById(event.getDepartment().getId());
-        Scheduler.sendGenericMessagetoBroker(dept.getName(),data.toString(), dept.getName().toString());
+            List<Event> events=eventRepo.getEventByDepartment_Id(dept.getId());
+            System.out.println("evebt is"+events);
+            for (int i = 0; i < events.size(); i++) {
+                List<Long> temp_user = userEventRepo.getUserForEvent(events.get(i).getEvent_id());
+                System.out.println("user for event .."+temp_user+events.get(i));
+                for (int j = 0; j < temp_user.size(); j++) {
+                    HashMap<String, String> data = new HashMap<String, String>();
+                    data.put("title", events.get(i).getTitle());
+                    data.put("description", events.get(i).getDescription().toString());
+                    data.put("venue", events.get(i).getVenue().toString());
+                    data.put("event_id", events.get(i).getEvent_id().toString());
+                    data.put("action", "department deleted.");
+                    Scheduler.sendMessageToBroker(temp_user.get(j).toString(),data.toString(), temp_user.get(j).toString());
+                }
+
+
+        }
+        eventRepo.delete(event);
+
     }
 
 

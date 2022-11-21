@@ -78,6 +78,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void deleteDepartmentById(long id) throws IOException, TimeoutException {
 
         Department department=DepartmentRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Department","name",id));
+
+        System.out.println("sending delete notification");
         eventService.getUserIdsForDeptAndSendNotification(department.getId());
         DepartmentRepo.delete(department);
     }
