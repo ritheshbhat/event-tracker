@@ -23,7 +23,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -86,7 +85,7 @@ public class AuthController {
                 System.out.println("updating dept.");
                 UserDepartments userDepartments = new UserDepartments();
                 userDepartments.setUser(user);
-                userDepartments.setDepartment(dept);
+                userDepartments.setUDepartment(dept);
                 userDepartmentRepo.save(userDepartments);
                 //7,8
             }
@@ -103,7 +102,7 @@ public class AuthController {
                 System.out.println("user is"+user.getId());
                 UserDepartments userDepartments = new UserDepartments();
                 userDepartments.setUser(user);
-                userDepartments.setDepartment(dept);
+                userDepartments.setUDepartment(dept);
                 userDepartmentRepo.getUserDepartmentsIdByUserId(user.getId(), depts.get(i));            }
 
         }
@@ -148,7 +147,7 @@ public class AuthController {
             UserDepartments userDepartments = new UserDepartments();
             userDepartments.setUser(user);
             Department dept = departmentRepo.getDeptById(departments.get(i));
-            userDepartments.setDepartment(dept);
+            userDepartments.setUDepartment(dept);
             userDepartmentRepo.save(userDepartments);
 
         }

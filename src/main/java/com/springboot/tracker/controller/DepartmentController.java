@@ -1,7 +1,9 @@
 package com.springboot.tracker.controller;
 
 import com.springboot.tracker.payload.DepartmentDto;
+import com.springboot.tracker.repository.DepartmentRepo;
 import com.springboot.tracker.security.service.DepartmentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +18,8 @@ import java.util.concurrent.TimeoutException;
 @RequestMapping("/departments/")
 public class DepartmentController {
 
+    @Autowired
+    private DepartmentRepo departmentRepo;
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
@@ -24,9 +28,21 @@ public class DepartmentController {
     //Creating an event
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<DepartmentDto> createDepartment(@RequestBody DepartmentDto departmentDto){
-        return new ResponseEntity<>(departmentService.createDepartment(departmentDto), HttpStatus.CREATED);
-    }
+    public ResponseEntity<?> createDepartment(@RequestBody DepartmentDto departmentDto){
+        String name;
+        name=departmentRepo.existsDepartmentByName(departmentDto.getName());
+        if(departmentDto.getName().equalsIgnoreCase(name)) {
+            System.out.println("2"+departmentDto.getName()+name);
+            return new ResponseEntity<>("Department already created",HttpStatus.OK);
+
+        }
+        else {
+
+            System.out.println(departmentDto.getName()+name);
+            return new ResponseEntity<>(departmentService.createDepartment(departmentDto), HttpStatus.CREATED);
+        }
+        }
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping

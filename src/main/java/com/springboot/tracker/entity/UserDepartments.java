@@ -5,10 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -34,7 +33,7 @@ public class UserDepartments {
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
-    private Department department;
+    private Department uDepartment;
 
 
 }

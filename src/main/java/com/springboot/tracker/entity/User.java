@@ -51,9 +51,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "uEvent",cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Set<UserEvents> uEvent=new HashSet<>();
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "uDepartment",cascade = CascadeType.REMOVE,orphanRemoval = true)
-//    private Set<UserDepartments> uDepartment=new HashSet<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    private Set<UserDepartments> user=new HashSet<>();
 
 
 

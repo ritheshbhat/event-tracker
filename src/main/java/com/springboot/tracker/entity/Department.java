@@ -31,7 +31,9 @@ public class Department {
     @OneToMany(mappedBy = "department",cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Set<Event> events=new HashSet<>();
 
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "uDepartment",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    private Set<UserDepartments> uDepartment=new HashSet<>();
 
 
 

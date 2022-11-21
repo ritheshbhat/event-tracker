@@ -3,6 +3,8 @@ package com.springboot.tracker.controller;
 import com.springboot.tracker.entity.User;
 import com.springboot.tracker.helpers.ZXingHelper;
 import com.springboot.tracker.payload.EventDto;
+import com.springboot.tracker.repository.DepartmentRepo;
+import com.springboot.tracker.repository.EventRepo;
 import com.springboot.tracker.repository.UserRepository;
 import com.springboot.tracker.security.service.EventService;
 import lombok.var;
@@ -32,16 +34,37 @@ public class EventController {
     public EventController(EventService eventService) {
         this.eventService = eventService;
     }
-
+    @Autowired
+    private EventRepo eventRepo;
     @Autowired
     private UserRepository userRepository;
     private EventService eventService;
+    @Autowired
+    private DepartmentRepo departmentRepo;
 
     // Creating an event
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("events")
-    public ResponseEntity<EventDto> createEvent(@RequestBody EventDto eventDto) throws IOException, TimeoutException {
-        return new ResponseEntity<>(eventService.createEvent(eventDto), HttpStatus.CREATED);
+    public ResponseEntity<?> createEvent(@RequestBody EventDto eventDto) throws IOException, TimeoutException {
+        long dept_id=eventDto.getDepartment().getId();
+        boolean dept_exist=departmentRepo.existsById(dept_id);
+        if(!dept_exist){
+            return new ResponseEntity<>("Department does not exist",HttpStatus.OK);
+        }
+        String title;
+        title=eventRepo.existsByEventTitle(eventDto.getTitle());
+        if(eventDto.getTitle().equalsIgnoreCase(title)) {
+            System.out.println("2"+eventDto.getTitle()+title);
+            return new ResponseEntity<>("Event already created with the same title",HttpStatus.OK);
+
+        }
+        else {
+
+            System.out.println(eventDto.getTitle()+title);
+            return new ResponseEntity<>(eventService.createEvent(eventDto), HttpStatus.CREATED);
+        }
+
+
     }
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("events")
