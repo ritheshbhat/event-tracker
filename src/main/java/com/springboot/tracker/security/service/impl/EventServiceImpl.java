@@ -155,7 +155,6 @@ public class EventServiceImpl implements EventService {
         Event event=eventRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Event","name",id));
         Department dept = departmentRepo.getDeptById(event.getDepartment().getId());
             List<Event> events=eventRepo.getEventByDepartment_Id(dept.getId());
-            System.out.println("evebt is"+events);
             for (int i = 0; i < events.size(); i++) {
                 List<Long> temp_user = userEventRepo.getUserForEvent(events.get(i).getEvent_id());
                 System.out.println("user for event .."+temp_user+events.get(i));
@@ -165,7 +164,7 @@ public class EventServiceImpl implements EventService {
                     data.put("description", events.get(i).getDescription().toString());
                     data.put("venue", events.get(i).getVenue().toString());
                     data.put("event_id", events.get(i).getEvent_id().toString());
-                    data.put("action", "department deleted.");
+                    data.put("action", "event deleted.");
                     Scheduler.sendMessageToBroker(temp_user.get(j).toString(),data.toString(), temp_user.get(j).toString());
                 }
 

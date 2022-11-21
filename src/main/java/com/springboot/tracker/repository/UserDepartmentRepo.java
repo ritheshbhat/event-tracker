@@ -17,5 +17,15 @@ public interface UserDepartmentRepo extends JpaRepository<UserDepartments,Long> 
     @Query("SELECT e.department from UserDepartments e where e.user.id =:x")
     List<Department> getUserDepartmentsByUserId(long x);
 
+
+    @Query("SELECT e.department.id from UserDepartments e where e.user.id =:x")
+    List<Long> getUserDepartmentsIdByUserId(long x);
+
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM UserDepartments where user.id =:x and department.id=:y")
+    void getUserDepartmentsIdByUserId(long x, long y);
+
+
 }
 

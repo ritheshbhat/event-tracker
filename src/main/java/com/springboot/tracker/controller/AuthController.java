@@ -8,6 +8,7 @@ import com.springboot.tracker.helpers.ZXingHelper;
 import com.springboot.tracker.payload.LoginDto;
 import com.springboot.tracker.payload.SignUpDto;
 import com.springboot.tracker.payload.UserDepartmentDto;
+import com.springboot.tracker.payload.deptUpdate;
 import com.springboot.tracker.repository.DepartmentRepo;
 import com.springboot.tracker.repository.RoleRepository;
 import com.springboot.tracker.repository.UserDepartmentRepo;
@@ -22,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -66,6 +68,49 @@ public class AuthController {
             uds.setDeparments(depts);
         return new ResponseEntity<>(uds,HttpStatus.OK);
     }
+
+    @PutMapping("/user/{username}")
+    public ResponseEntity<String> updateUserDepartment(@RequestBody deptUpdate updatedDepts, @PathVariable(name = "username") String username){
+        List<Long> updatedDeptIds = updatedDepts.getDepartments();
+        User user = userRepository.getUserFromUsername(username);
+        List<Long> depts = userDepartmentRepo.getUserDepartmentsIdByUserId(user.getId());
+
+        //dept dept=1,2,3
+        //updated dept= 2,7,8
+        for (int i = 0; i < updatedDeptIds.size() ; i++) {
+            boolean result = depts.contains(updatedDeptIds.get(i));
+            if(result){
+                System.out.println("nothing to update");
+            }else{
+                Department dept = departmentRepo.getDeptById(updatedDeptIds.get(i));
+                System.out.println("updating dept.");
+                UserDepartments userDepartments = new UserDepartments();
+                userDepartments.setUser(user);
+                userDepartments.setDepartment(dept);
+                userDepartmentRepo.save(userDepartments);
+                //7,8
+            }
+        }
+
+        for (int i = 0; i < depts.size() ; i++) {
+            boolean result = updatedDeptIds.contains(depts.get(i));
+            if(result){
+                System.out.println("do nothing");
+            }
+            else{
+                Department dept = departmentRepo.getDeptById(depts.get(i));
+                System.out.println("deleting dept."+depts.get(i));
+                System.out.println("user is"+user.getId());
+                UserDepartments userDepartments = new UserDepartments();
+                userDepartments.setUser(user);
+                userDepartments.setDepartment(dept);
+                userDepartmentRepo.getUserDepartmentsIdByUserId(user.getId(), depts.get(i));            }
+
+        }
+
+        return new ResponseEntity<>("preference updated",HttpStatus.OK);
+    }
+
 
     @PostMapping("/SignUp")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
