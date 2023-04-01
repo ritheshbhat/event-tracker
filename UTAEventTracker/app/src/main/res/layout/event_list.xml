@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient">
+
+
+    <Button
+        android:id="@+id/filterDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#673AB7"
+        android:text="Date"
+        android:background="@drawable/homescreen_button_style"
+        android:visibility="visible"
+        app:icon="@android:drawable/ic_menu_my_calendar"
+        app:layout_constraintEnd_toStartOf="@+id/filterDeptButton"
+        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <Button
+        android:id="@+id/filterDeptButton"
+        android:layout_width="114dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
+        android:backgroundTint="#673AB7"
+        android:text="Dept."
+
+        android:background="@drawable/homescreen_button_style"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="295dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="8dp"
+
+        android:text="Events"
+        android:textAlignment="center"
+        android:textColor="#673AB7"
+        android:textSize="44sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/regTable2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="List of user registrations"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/registerEvent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/removeFilterButton">
+
+<!--        <TableLayout-->
+<!--            android:id="@+id/table_main"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginTop="0dp"></TableLayout>-->
+        <TableLayout
+            android:id="@+id/event_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:id="@+id/header_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/event_id"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Id" />
+                <TextView
+                    android:id="@+id/date_header"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Name" />
+
+                <TextView
+                    android:id="@+id/description_header"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:text="Description" />
+
+                <TextView
+                    android:id="@+id/image_header"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Venue" />
+
+                <TextView
+                    android:id="@+id/name_header"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:text="Date" />
+
+
+
+            </TableRow>
+
+            <!-- Rows for each event will be added here -->
+
+        </TableLayout>
+
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="96dp"
+        android:text="Filter:"
+        android:textColor="#673AB7"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/registerEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/homescreen_button_style"
+        android:text="Register Event"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.846"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/removeFilterButton"
+        android:layout_width="200dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
+        android:backgroundTint="#673AB7"
+        android:text="Remove Filter"
+        android:background="@drawable/homescreen_button_style"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filterDateButton" />
+
+    <EditText
+        android:id="@+id/eventInput"
+        android:layout_width="177dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="19dp"
+        android:layout_marginBottom="37dp"
+        android:background="@drawable/homescreen_button_style"
+        android:ems="11"
+        android:hint=" Enter Event"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/registerEvent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regTable2"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
