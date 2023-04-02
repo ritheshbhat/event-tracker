@@ -8,21 +8,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
 import android.view.Gravity;
 import android.widget.TableRow;
 import android.widget.ScrollView;
-import android.graphics.Typeface;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import retrofit2.Call;
@@ -45,6 +38,8 @@ public class userEventList extends AppCompatActivity {
 
     private  MainActivity mainActivity;
 
+    private Button eventPassButton;
+    private QRCodeApiService barcodeApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +54,7 @@ public class userEventList extends AppCompatActivity {
         registerEventButton = findViewById(R.id.registerEvent);
         removeFilterButton = findViewById(R.id.removeFilterButton);
         event_table = findViewById(R.id.event_table);
+        eventPassButton=findViewById(R.id.eventPass);
 
 
 
@@ -132,6 +128,26 @@ public class userEventList extends AppCompatActivity {
                         // Handle failure
                     }
                 });
+            }
+        });
+
+
+
+        eventPassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                int userId=getIntent().getIntExtra("userId",0);
+
+                Intent intent = new Intent(userEventList.this, QRCodeActivity.class);
+                intent.putExtra("userId",userId);
+                startActivity(intent);
+
+//int userIdNum=mainActivity.getU
+                // Code to handle adding a new event
+
+
             }
         });
 

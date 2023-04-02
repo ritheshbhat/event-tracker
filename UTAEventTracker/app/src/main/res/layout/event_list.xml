@@ -181,4 +181,18 @@
         app:layout_constraintTop_toBottomOf="@+id/regTable2"
         app:layout_constraintVertical_bias="1.0" />
 
+    <Button
+        android:id="@+id/eventPass"
+        android:layout_width="93dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Event Pass"
+        app:layout_constraintBottom_toTopOf="@+id/textView10"
+        app:layout_constraintEnd_toStartOf="@+id/textView10"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
