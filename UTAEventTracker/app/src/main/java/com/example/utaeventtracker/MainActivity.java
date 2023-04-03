@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println("response is"+ responseBody);
                             int userId = getUserId(responseBody);
                             System.out.println(userId);
-                            if (responseBody.equals("admin")) {
-                                Intent adminEventPage = new Intent(MainActivity.this, adminEventActivity.class);
+                            if (username.equals("admin")) {
+                                Intent adminEventPage = new Intent(MainActivity.this, adminScannerActivity.class);
                                 startActivity(adminEventPage);
                             }
 

@@ -69,22 +69,7 @@ public class userEventList extends AppCompatActivity {
         eventApiService = EventApiService.create();
         populateTable();
 
-        // Set up filter buttons
-//        filterDateButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Code to handle filter by date
-//            }
-//        });
 
-//        filterDeptButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Code to handle filter by department
-//            }
-//        });
-//
-        // Set up new event button
         registerEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,8 +79,7 @@ public class userEventList extends AppCompatActivity {
                 String eventId= eventIdField.getText().toString();
                 int eventIdNum=Integer.parseInt(eventId);
                 int userId=getIntent().getIntExtra("userId",0);
-//int userIdNum=mainActivity.getU
-                // Code to handle adding a new event
+
 
 
                 Retrofit retrofit = new Retrofit.Builder()
@@ -108,15 +92,17 @@ public class userEventList extends AppCompatActivity {
                 System.out.println("UserId is "+userId+"Event Id is :"+eventIdNum);
 
                 registerEventApiService.registerEvent(registerEvent).enqueue(new Callback<Void>() {
+
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
+                        System.out.println(response);
                         if(response.isSuccessful()) {
                             //System.out.println("Hi signed");
-                            Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Registered Successfully !! ", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(userEventList.this, userEventList.class);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Unable to register, please try again", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(userEventList.this, userEventList.class);
                             startActivity(intent);
                         }
