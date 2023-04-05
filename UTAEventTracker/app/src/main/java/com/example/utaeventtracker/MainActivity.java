@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
                 String username = userTextField.getText().toString();
                 String password = passwordTextField.getText().toString();
-                String url = "http://3.235.99.5:9095/event-pass/apis/v1/user/?email=" + username + "&password=" + password;
+                String url = "http://3.238.155.98:9095/event-pass/apis/v1/user/?email=" + username + "&password=" + password;
 
-//                String url = "http://3.235.99.5:9095/";
+//                String url = "http://3.238.155.98:9095/";
 
 
                 // Make a network call to check if the user credentials are valid
@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
                             int userId = getUserId(responseBody);
                             System.out.println(userId);
                             if (username.equals("admin")) {
-                                Intent adminEventPage = new Intent(MainActivity.this, adminScannerActivity.class);
-                                startActivity(adminEventPage);
+                                Intent aHP = new Intent(MainActivity.this, adminHomePage.class);
+                                startActivity(aHP);
                             }
 
                             else {

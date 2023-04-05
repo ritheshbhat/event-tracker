@@ -59,7 +59,7 @@ public class userEventList extends AppCompatActivity {
 
 
 //        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://3.235.99.5:9095/")
+//                .baseUrl("http://3.238.155.98:9095/")
 //                .addConverterFactory(GsonConverterFactory.create())
 //                .build();
 //
@@ -83,7 +83,7 @@ public class userEventList extends AppCompatActivity {
 
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://3.235.99.5:9095/")
+                        .baseUrl("http://3.238.155.98:9095/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 

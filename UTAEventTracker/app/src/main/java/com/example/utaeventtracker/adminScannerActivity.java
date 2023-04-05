@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -26,14 +25,6 @@ import androidx.core.content.ContextCompat;
 
 import com.google.zxing.Result;
 
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 public class adminScannerActivity extends AppCompatActivity {
     private Integer CAMERA_REQUEST_CODE = 101;
     private CodeScanner codeScanner;
@@ -43,6 +34,7 @@ public class adminScannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.admin_add_event);
         setContentView(R.layout.admin_scanner);
 
         setupPerm();
@@ -63,92 +55,19 @@ public class adminScannerActivity extends AppCompatActivity {
         codeScanner.setFlashEnabled(false); // Whether to enable flash or not
 
         // Callbacks
-//
-//        codeScanner.setDecodeCallback(new DecodeCallback() {
-//            @Override
-//            public void onDecoded(@NonNull Result result) {
-//                System.out.println("***"+ result.getText().toString());
-//                OkHttpClient client = new OkHttpClient();
-//                String userCredentials = globalInstance.getAdminUser1() + ":" + globalInstance.getAdminPassword1();
-//                final String basic =
-//                        "Basic " + Base64.encodeToString(userCredentials.getBytes(), Base64.NO_WRAP);
-//                String jsonBody = "{\"user\": { \"id\": "+ new Integer(result.getText().toString()) +" }, \"uevent\": { \"event_id\": "+globalInstance.eventId+"} }";
-//                Request request = new Request.Builder().url(globalInstance.checkRegDetails).header("Authorization", basic).build();
-//
-//                client.newCall(request).enqueue(new Callback() {
-//                    @Override
-//                    public void onFailure(Call call, IOException e) {
-//                        adminScannerActivity.this.runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onResponse(Call call, Response response) throws IOException {
-//                        if (response.isSuccessful()) {
-//                            String myResponse = response.body().string();
-//                            adminScannerActivity.this.runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    if (myResponse.equalsIgnoreCase("true")) {
-//                                        Toast.makeText(getApplicationContext(), "User Enrolled!", Toast.LENGTH_LONG).show();
-//                                    } else {
-//                                        Toast.makeText(getApplicationContext(), "User Not Registered!", Toast.LENGTH_LONG).show();
-//                                    }
-//                                    Intent adminEventPage=new Intent(adminScannerActivity.this,adminEventListActivity.class);
-//                                    startActivity(adminEventPage);
-//                                }
-//                            });
-//                        }
-//                    }
-//                });
-//
-//                OkHttpClient getClient = new OkHttpClient();
-//                String getUrl = globalInstance.checkRegDetails;
-//                String jsonBody = "{\"user\": { \"id\": "+globalInstance.currentUser.getUser().getId()+" }, \"uevent\": { \"event_id\": "+event.getId()+"} }";
-//                RequestBody formBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonBody);
-//                String userCredentials = globalInstance.getAdminUser1() + ":" + globalInstance.getAdminPassword1();
-//                final String basic =
-//                        "Basic " + Base64.encodeToString(userCredentials.getBytes(), Base64.NO_WRAP);
-//                Request request = new Request.Builder().url(globalInstance.deptUrl).header("Authorization", basic).build();
-//
-//                Request putRequest = new Request.Builder()
-//                        .url(getUrl)
-//                        .get(formBody)
-//                        .header("Authorization", basic)
-//                        .build();
-//
-//                putClient.newCall(putRequest).enqueue(new Callback() {
-//                    @Override
-//                    public void onFailure(Call call, IOException e) {
-//                        adminDeptListActivity.this.runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Toast.makeText(getApplicationContext(), "Update Failed.", Toast.LENGTH_LONG).show();
-//                            }
-//                        });
-//                    }
-//                    @Override
-//                    public void onResponse(Call call, Response response) throws IOException {
-//                        if (response.isSuccessful()) {
-//                            String myResponse = response.body().string();
-//                            adminDeptListActivity.this.runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    deptTable.removeViews(1, departmentList.length);
-//                                    Toast.makeText(getApplicationContext(), "Department Name Successfully Updated.", Toast.LENGTH_LONG).show();
-//                                }
-//                            });
-//                        }
-//                    }
-//                });
-//
-//                Toast.makeText(adminScannerActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
+//..
+
+
+        codeScanner.setDecodeCallback(new DecodeCallback() {
+            @Override
+            public void onDecoded(@NonNull Result result) {
+                String decodedString = result.getText();
+                // use the decodedString variable as needed
+                System.out.println("user id is "+decodedString);
+
+            }
+        });
+
 
         codeScanner.setErrorCallback(new ErrorCallback() {
             @Override
@@ -174,7 +93,7 @@ public class adminScannerActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         deptCreateSuccessDialog.cancel();
-                        Intent adminEventPage=new Intent(adminScannerActivity.this,MainActivity.class);
+                        Intent adminEventPage=new Intent(adminScannerActivity.this, adminHomePage.class);
                         startActivity(adminEventPage);
                     }
                 }, 1500);

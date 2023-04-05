@@ -46,7 +46,7 @@ public class QRCodeActivity extends AppCompatActivity {
         //String barcodeImageUrl = getIntent().getStringExtra("barcodeImageUrl");
         String userId1=String.valueOf(userId);
         // Load the barcode image into the ImageView using Glide
-        String url="http://3.235.99.5:9095/event-pass/apis/v1/barcode/?user_id="+userId1;
+        String url="http://3.238.155.98:9095/event-pass/apis/v1/barcode/?user_id="+userId1;
         // Call<String> yourApiMethod(@Query("username") String username, @Query("password") String password);
         System.out.println(url);
 
