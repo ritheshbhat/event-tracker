@@ -48,7 +48,7 @@ public class userEventList extends AppCompatActivity {
 
         filterDateButton = findViewById(R.id.filterDateButton);
         filterDeptButton = findViewById(R.id.filterDeptButton);
-        textView10 = findViewById(R.id.textView10);
+        textView10 = findViewById(R.id.adminEventPass);
         regTable2 = findViewById(R.id.regTable2);
         textView11 = findViewById(R.id.textView11);
         registerEventButton = findViewById(R.id.registerEvent);

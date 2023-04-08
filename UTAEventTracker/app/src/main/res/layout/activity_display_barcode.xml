@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/adminEventPass"
         android:layout_width="248dp"
         android:layout_height="93dp"
 
@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/adminEventPass"
         app:srcCompat="@android:drawable/gallery_thumb" />
 
 

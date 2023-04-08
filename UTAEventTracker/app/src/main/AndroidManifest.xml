@@ -34,12 +34,18 @@
         <activity
             android:name=".QRCodeActivity"
             android:exported="false" />
-        <activity
-            android:name=".adminScannerActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".adminScannerActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".adminHomePage"
             android:exported="false" />
+        <activity
+            android:name=".AdminScannerActivity"
+            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".adminScannerActivity1"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".MainActivity"
             android:exported="true">

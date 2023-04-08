@@ -12,14 +12,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_success_icon" />
+        app:srcCompat="@mipmap/ic_fail_icon" />
 
     <TextView
         android:id="@+id/failureMessage"
         android:layout_width="0dp"
         android:layout_height="40dp"
 
-        android:text="User has registered successfully!"
+        android:text="User has not registered!"
         android:textAlignment="center"
         android:textColor="#673AB7"
         android:textSize="22sp"
