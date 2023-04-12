@@ -57,15 +57,6 @@ public class userEventList extends AppCompatActivity {
         eventPassButton=findViewById(R.id.eventPass);
 
 
-
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://3.238.155.98:9095/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//         eventApiService = retrofit.create(EventApiService.class);
-//        populateTable();
-
         eventApiService = EventApiService.create();
         populateTable();
 
@@ -97,11 +88,13 @@ public class userEventList extends AppCompatActivity {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         System.out.println(response);
                         if(response.isSuccessful()) {
-                            //System.out.println("Hi signed");
+                            System.out.println("Hi signed");
                             Toast.makeText(getApplicationContext(), "Registered Successfully !! ", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(userEventList.this, userEventList.class);
                             startActivity(intent);
                         } else {
+                            System.out.println("error" +response.message());
+                            System.out.println(response.message());
                             Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(userEventList.this, userEventList.class);
                             startActivity(intent);

@@ -7,6 +7,6 @@ import retrofit2.http.PUT;
 
 public interface RegisterEventApiService {
 
-    @PUT("event-pass/apis/v1/register-event")
+    @PUT("event-pass/apis/v1/register-event/")
     Call<Void> registerEvent(@Body RegisterEvent registerEvent);
 }

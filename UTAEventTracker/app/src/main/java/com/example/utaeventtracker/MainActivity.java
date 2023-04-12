@@ -1,8 +1,10 @@
 package com.example.utaeventtracker;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+            // Other code to execute after starting the WaitForMessageTask
 
         // To set Action Title Bar color
         ActionBar titleBar;
@@ -87,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             else {
+                                new WaitForMessageTask(MainActivity.this).execute(String.valueOf(userId));
+
                                 Intent homePage = new Intent(MainActivity.this, userEventList.class);
                                 homePage.putExtra("userId",userId);
                                 startActivity(homePage);
@@ -107,6 +113,26 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+
+
+    private class WaitForMessageTask extends AsyncTask<String, Void, Void> {
+        private Context mContext;
+
+        public WaitForMessageTask(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        protected Void doInBackground(String... userId) {
+            try {
+                BarcodeReader.waitForMessage(userId[0], mContext);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
     private int getUserId(String responseBody) {

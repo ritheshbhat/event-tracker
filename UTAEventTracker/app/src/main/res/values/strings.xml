@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">UTA Event Tracker</string>
+    <string name="app_name">UTA Digital Event Pass</string>
     <string name="scan_qr">SCAN QR</string>
 </resources>
